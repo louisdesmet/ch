@@ -10,12 +10,18 @@ import Cart from './components/Cart';
 export const routes = [
     {
         path: '/',
-        component: Home
+        component: Home,
+        meta: {
+            auth: true
+        }
     },
     {
         path: '/home',
         name: 'home',
-        component: Home
+        component: Home,
+        meta: {
+            auth: true
+        }
     },
     {
         path: '/login',
@@ -25,33 +31,51 @@ export const routes = [
     {
         path: '/services',
         name: 'services',
-        component: Services
+        component: Services,
+        meta: {
+            auth: true
+        }
     },
     {
         path: '/domains',
         name: 'domains',
-        component: Domains
+        component: Domains,
+        meta: {
+            auth: true
+        }
     },
     {
         path: '/licenses',
         name: 'licenses',
-        component: Licenses
+        component: Licenses,
+        meta: {
+            auth: true
+        }
     },
     {
         path: '/reports',
         name: 'reports',
-        component: Reports
+        component: Reports,
+        meta: {
+            auth: true
+        }
     },
     {
         path: '/order',
         name: 'order',
         component: Order,
+        meta: {
+            auth: true
+        },
         props: true
     },
     {
         path: '/cart',
         name: 'cart',
         component: Cart,
+        meta: {
+            auth: true
+        },
         props: true
     },
 ];

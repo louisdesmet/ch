@@ -137,7 +137,6 @@
 <script>
     export default {
         data: () => ({
-
             categories: [
                 'Microsoft Cloud',
                 'Storage & Backup',
@@ -161,21 +160,21 @@
             services: [
                 {
                     avatar: 'img/office365.png',
-                    title: 'Office 365 abonnement',
+                    title: 'Offic 365 abonement',
                     item1: "Tenant: denever.onmicrosoft.com",
                     item2: "Status: actief",
                     item3: "Automatische verlenging op 01/02/2019"
                 },
                 {
                     avatar: 'img/office365.png',
-                    title: 'Office 365 abonnement',
+                    title: 'Office 365 abonnemen',
                     item1: "Tenant: denever.onmicrosoft.com",
                     item2: "Status: actief",
                     item3: "Automatische verlenging op 01/02/2019"
                 },
                 {
                     avatar: 'img/office365.png',
-                    title: 'Office 365 abonnement',
+                    title: 'Office 365 abonement',
                     item1: "Tenant: denever.onmicrosoft.com",
                     item2: "Status: actief",
                     item3: "Licentie vervalt op 01/02/2019"
@@ -184,42 +183,48 @@
             domains: [
                 {
                     avatar: 'img/office365.png',
-                    title: 'Office 365 abonnement',
+                    title: 'Office 365 abonnemnt',
                     item1: "Tenant: denever.onmicrosoft.com",
                     item2: "Status: actief",
                     item3: "Automatische verlenging op 01/02/2019"
                 },
                 {
                     avatar: 'img/office365.png',
-                    title: 'Office 365 abonnement',
+                    title: 'Office 365 bonnement',
                     item1: "Tenant: denever.onmicrosoft.com",
                     item2: "Status: actief",
                     item3: "Automatische verlenging op 01/02/2019"
                 },
                 {
                     avatar: 'img/office365.png',
-                    title: 'Office 365 abonnement',
+                    title: 'Office 36 abonnement',
                     item1: "Tenant: denever.onmicrosoft.com",
                     item2: "Status: actief",
                     item3: "Licentie vervalt op 01/02/2019"
                 }
             ],
-            products: []
+            //products: []
         }),
-        created () {
-            this.initialize();
+        mounted () {
+            this.$store.dispatch('products');
+            //this.initialize();
+        },
+        computed: {
+            products() {
+                return this.$store.getters.products;
+            }
         },
         methods: {
             initialize() {
-                this.fetchProducts();
+                //this.fetchProducts();
                 this.fetchCategories();
                 this.fetchVendors();
             },
-            fetchProducts() {
+            /*fetchProducts() {
                 axios.get('/api/products').then(response => {
                     this.products = response.data;
                 });
-            },
+            },*/
             fetchCategories() {
                 axios.get('/api/categories').then(response => {
                     this.categories = response.data;

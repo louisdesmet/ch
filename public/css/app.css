@@ -47,7 +47,7 @@
   -webkit-box-flex: 0;
       -ms-flex: 0 0 270px;
           flex: 0 0 270px;
-  height: 1000px;
+  height: 3000px;
 }
 
 .client-nav-container {
@@ -125,7 +125,7 @@
       -ms-flex: 1;
           flex: 1;
   background: #FAFAFA;
-  height: 1000px;
+  height: 3000px;
 }
 
 .new-service {
@@ -133,7 +133,7 @@
   -webkit-box-flex: 1;
       -ms-flex: 1;
           flex: 1;
-  height: 1000px;
+  height: 3000px;
 }
 
 .new-service .new-service-color {
@@ -150,7 +150,7 @@
 
 .floating-cart {
   position: fixed;
-  bottom: 30px;
-  right: 30px;
+  bottom: 20px;
+  right: 15px;
 }
 

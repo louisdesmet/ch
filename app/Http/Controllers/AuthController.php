@@ -8,16 +8,17 @@ use Illuminate\Http\Request;
 class AuthController extends Controller
 {
     public function login(Request $request) {
+
         $headers = [
-            'Content-Type' => 'application/json'
+            'Accept' => 'application/json'
         ];
         $client = new Client([
             'headers' => $headers
         ]);
         $response = $client->request('POST', 'laravel-api.test/api/login', [
             'form_params' => [
-                'email' => $request->email,
-                'password' => $request->password
+                'email' => $request->credentials['email'],
+                'password' => $request->credentials['password']
             ]
         ]);
         return $response->getBody()->getContents();

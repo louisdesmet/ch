@@ -40,7 +40,7 @@
 .client-nav {
   background: #313131;
   flex: 0 0 270px;
-  height: 1000px;
+  height: 3000px;
 }
 
 .client-nav-container {
@@ -113,13 +113,13 @@
 .client-details {
   flex: 1;
   background: #FAFAFA;
-  height: 1000px;
+  height: 3000px;
 }
 
 .new-service {
   background: #E2EAEC;
   flex: 1;
-  height: 1000px;
+  height: 3000px;
 }
 
 .new-service .new-service-color {
@@ -136,6 +136,6 @@
 
 .floating-cart {
   position: fixed;
-  bottom: 30px;
-  right: 30px;
+  bottom: 20px;
+  right: 15px;
 }
