@@ -6,6 +6,7 @@ import Licenses from './components/Licenses';
 import Reports from './components/Reports';
 import Order from './components/Order';
 import Cart from './components/Cart';
+import Checkout from './components/Checkout';
 
 export const routes = [
     {
@@ -73,6 +74,15 @@ export const routes = [
         path: '/cart',
         name: 'cart',
         component: Cart,
+        meta: {
+            auth: true
+        },
+        props: true
+    },
+    {
+        path: '/checkout',
+        name: 'checkout',
+        component: Checkout,
         meta: {
             auth: true
         },

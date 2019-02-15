@@ -1,65 +1,55 @@
 <template>
-   <div>
+   <v-container>
       <v-toolbar flat color="white">
-         <v-toolbar-title>My CRUD</v-toolbar-title>
-         <v-divider
-                 class="mx-2"
-                 inset
-                 vertical
-         ></v-divider>
+         <v-toolbar-title>Winkelmandje</v-toolbar-title>
          <v-spacer></v-spacer>
       </v-toolbar>
-      <v-data-table
-              :items="items"
-              class="elevation-1"
-      >
+      <v-data-table :items="items" class="elevation-1" hide-actions hide-headers>
          <template slot="items" slot-scope="props">
-            <td>{{ props.item }}</td>
+            <td>{{ props.item.name }}</td>
+            <td v-for="option in props.item.options">{{ option }}</td>
+
+            <td>59.45€</td>
             <td class="justify-center layout px-0">
-               <!--<v-icon-->
-                       <!--small-->
-                       <!--class="mr-2"-->
-                       <!--@click="editItem(props.item)"-->
-               <!--&gt;-->
-                  <!--edit-->
-               <!--</v-icon>-->
-               <!--<v-icon-->
-                       <!--small-->
-                       <!--@click="deleteItem(props.item)"-->
-               <!--&gt;-->
-                  <!--delete-->
-               <!--</v-icon>-->
+               <v-icon small @click="deleteItem(props.item)">delete</v-icon>
             </td>
          </template>
       </v-data-table>
-   </div>
+      <v-btn block @click="checkout">Afrekenen</v-btn>
+   </v-container>
 </template>
 <script>
    export default {
       data: () => ({
          items: [],
       }),
-      props: ['product'],
+      props: ['product', 'options'],
       mounted() {
-         this.add();
+         console.log(this.product);
+         if(this.product) {
+            this.add();
+         }
          this.cart();
       },
       methods: {
          add() {
             let cart = JSON.parse(localStorage.getItem('cart'));
             if(cart == null) {
-               localStorage.setItem("cart", JSON.stringify([this.product.name]));
+               localStorage.setItem("cart", JSON.stringify([{id: 1, name: this.product.name, options: this.options}]));
             } else {
-               cart.push(this.product.name);
+               cart.push({id: cart.length + 1, name: this.product.name, options: this.options});
                localStorage.setItem("cart", JSON.stringify(cart));
             }
          },
          cart() {
             let string = localStorage.getItem('cart');
             this.items = JSON.parse(string);
-
-            console.log(JSON.parse(string));
+            console.log(this.items);
+         },
+         checkout() {
+            this.$router.push('/checkout');
          }
+
       }
    }
 </script>

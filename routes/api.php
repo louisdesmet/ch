@@ -17,6 +17,8 @@ Route::post('/login', 'AuthController@login');
 Route::resource('/products', 'ProductController');
 Route::resource('/categories', 'CategoryController');
 Route::resource('/vendors', 'VendorController');
+Route::resource('/users', 'UserController');
+Route::resource('/orders', 'OrderController');
 
 
 /*Route::middleware('auth:api')->get('/user', function (Request $request) {

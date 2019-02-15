@@ -9,6 +9,10 @@ export default {
         loading: false,
         auth_error: null,
         products: [],
+        users: [],
+        vendors: [],
+        categories: [],
+        orders: []
     },
     getters: {
         loading(state) {
@@ -25,7 +29,19 @@ export default {
         },
         products(state) {
             return state.products;
-        }
+        },
+        users(state) {
+            return state.users;
+        },
+        vendors(state) {
+            return state.vendors;
+        },
+        categories(state) {
+            return state.categories;
+        },
+        orders(state) {
+            return state.orders;
+        },
 
     },
     mutations: {
@@ -38,7 +54,6 @@ export default {
             state.loggedIn = true;
             state.loading = false;
             state.currentUser = Object.assign({}, payload.user, {token: payload.auth.access_token});
-
             localStorage.setItem('user', JSON.stringify(state.currentUser));
         },
         loginFailed(state, payload) {
@@ -52,6 +67,18 @@ export default {
         },
         products(state, payload) {
             state.products = payload;
+        },
+        users(state, payload) {
+            state.users = payload;
+        },
+        vendors(state, payload) {
+            state.vendors = payload;
+        },
+        categories(state, payload) {
+            state.categories = payload;
+        },
+        orders(state, payload) {
+            state.orders = payload;
         }
     },
     actions: {
@@ -60,8 +87,27 @@ export default {
         },
         products(context) {
             axios.get('/api/products').then((response) => {
-                console.log(response);
                 context.commit('products', response.data);
+            });
+        },
+        users({commit, state}) {
+            axios.get('/api/users/' + state.currentUser.id).then((response) => {
+                commit('users', response.data.data.users);
+            });
+        },
+        vendors(context) {
+            axios.get('/api/vendors').then((response) => {
+                context.commit('vendors', response.data);
+            });
+        },
+        categories(context) {
+            axios.get('/api/categories').then((response) => {
+                context.commit('categories', response.data);
+            });
+        },
+        orders(context) {
+            axios.get('/api/orders').then((response) => {
+                context.commit('orders', response.data);
             });
         }
     }

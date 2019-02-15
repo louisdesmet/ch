@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 
-class ProductController extends Controller
+class OrderController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,9 +22,9 @@ class ProductController extends Controller
         $client = new Client([
             'headers' => $headers
         ]);
-        $r = $client->get('laravel-api.test/api/products');
-        $products = json_decode($r->getBody()->getContents());
-        return $products->data;
+        $r = $client->get('laravel-api.test/api/orders');
+//        $orders = json_decode($r->getBody()->getContents());
+//        return $orders->data;
     }
 
     /**

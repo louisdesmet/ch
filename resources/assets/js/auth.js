@@ -7,7 +7,6 @@ export function login(credentials) {
                 handleError(rej);
             } else {
                 res(response.data);
-                console.log(response.data);
             }
         }).catch((err) => {
             handleError(rej);

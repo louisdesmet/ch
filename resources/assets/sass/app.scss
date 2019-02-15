@@ -33,14 +33,10 @@
   padding: 25px 0;
 }
 
-.main-container {
-  display: flex;
-}
-
 .client-nav {
   background: #313131;
-  flex: 0 0 270px;
-  height: 3000px;
+  padding: 10px 0 0 0;
+  height: 100%;
 }
 
 .client-nav-container {
@@ -49,7 +45,7 @@
 
 .client-nav .selected-client {
   background: #4B4B4B;
-  margin: 10px 0;
+  margin:0 0 10px 0;
 }
 
 .client-nav .selected-client p {
@@ -111,15 +107,11 @@
 }
 
 .client-details {
-  flex: 1;
   background: #FAFAFA;
-  height: 3000px;
 }
 
 .new-service {
   background: #E2EAEC;
-  flex: 1;
-  height: 3000px;
 }
 
 .new-service .new-service-color {
@@ -138,4 +130,5 @@
   position: fixed;
   bottom: 20px;
   right: 15px;
+  z-index: 9999;
 }

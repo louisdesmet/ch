@@ -12,5 +12,10 @@
         data: () => ({
         }),
         props: ['product'],
+        mounted() {
+            if(this.product.id == 40 || this.product.id == 41 || this.product.id == 42 || this.product.id == 43) {
+                this.$router.push({ name: 'cart', params: { product: this.product, options: ['', ''] }})
+            }
+        }
     }
 </script>

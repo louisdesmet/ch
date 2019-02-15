@@ -4,7 +4,7 @@
             <v-flex xs8 offset-xs2>
                 <v-alert v-if="authError" :value="true" color="error" icon="warning" outline>{{ authError }}</v-alert>
                 <v-card flat class="logincard pa-4">
-                    <v-form @submit.prevent="authenticate">
+                    <v-form>
                         <v-text-field required label="Email" type="email"
                                       :error-messages="emailErrors"
                                       @input="$v.form.email.$touch()"
@@ -20,7 +20,9 @@
                                       v-model="form.password"
                                       autocomplete="new-password">
                         </v-text-field>
-                        <v-btn type="submit" primary large block>Aanmelden</v-btn>
+                        <v-btn type="submit" block :loading="loading" :disabled="loading" @click.prevent="loader = 'loading'">
+                            Aanmelden<span slot="loader" class="custom-loader"><v-icon light>cached</v-icon></span>
+                        </v-btn>
                     </v-form>
                 </v-card>
             </v-flex>
@@ -36,7 +38,9 @@
             form: {
                 email: '',
                 password:''
-            }
+            },
+            loader: null,
+            loading: false
         }),
         mixins: [validationMixin],
         validations: {
@@ -45,29 +49,46 @@
                 password: { required }
             }
         },
+        watch: {
+            loader () {
+                this.$v.form.$touch();
+                if(this.$v.form.$error) return;
+                const l = this.loader;
+                this[l] = !this[l];
+                if(this.loader == 'loading') {
+                    this.$store.dispatch('login');
+                    login(this.$data.form).then((res) => {
+                        this.$store.commit('loginSuccess', res);
+                        this[l] = false
+                        this.$router.push({path: '/'});
+                    }).catch((error) => {
+                        this.$store.commit('loginFailed', {error});
+                        this[l] = false
+                    });
+                    this.loader = null;
+                }
+            }
+        },
         computed: {
             authError() {
                 return this.$store.getters.authError;
             },
             emailErrors () {
-                const errors = []
-                if (!this.$v.form.email.$dirty) return errors
-                !this.$v.form.email.email && errors.push('Must be valid e-mail')
-                !this.$v.form.email.required && errors.push('E-mail is required')
+                const errors = [];
+                if (!this.$v.form.email.$dirty) return errors;
+                !this.$v.form.email.email && errors.push('Must be valid e-mail');
+                !this.$v.form.email.required && errors.push('E-mail is required');
                 return errors
             },
             passwordErrors () {
-                const errors = []
-                if (!this.$v.form.password.$dirty) return errors
-                !this.$v.form.password.required && errors.push('Password is required')
-                return errors
+                const errors = [];
+                if (!this.$v.form.password.$dirty) return errors;
+                !this.$v.form.password.required && errors.push('Password is required');
+                return errors;
             }
         },
         methods: {
             authenticate() {
-                this.$v.form.$touch();
-                if(this.$v.form.$error) return
-
                 this.$store.dispatch('login');
                 login(this.$data.form).then((res) => {
                     this.$store.commit('loginSuccess', res);
@@ -80,3 +101,41 @@
         }
     }
 </script>
+<style scoped>
+    .custom-loader {
+        animation: loader 1s infinite;
+        display: flex;
+    }
+    @-moz-keyframes loader {
+        from {
+            transform: rotate(0);
+        }
+        to {
+            transform: rotate(360deg);
+        }
+    }
+    @-webkit-keyframes loader {
+        from {
+            transform: rotate(0);
+        }
+        to {
+            transform: rotate(360deg);
+        }
+    }
+    @-o-keyframes loader {
+        from {
+            transform: rotate(0);
+        }
+        to {
+            transform: rotate(360deg);
+        }
+    }
+    @keyframes loader {
+        from {
+            transform: rotate(0);
+        }
+        to {
+            transform: rotate(360deg);
+        }
+    }
+</style>

@@ -35,27 +35,13 @@ axios.interceptors.response.use(null, (error) => {
 router.beforeEach((to, from, next) => {
     const auth = to.matched.some(record => record.meta.auth);
     const currentUser = store.state.currentUser;
-    console.log(currentUser);
     if(auth && !currentUser) {
-        console.log('requires auth and not logged in');
         next('/login');
     } else if(to.path == '/login' && currentUser) {
-        console.log('requested page is login but youre authenticated');
         next('/');
     } else {
-        console.log('you are free to go on')
         next();
     }
-
-    // const publicPages = ['/login'];
-    // const authRequired = !publicPages.includes(to.path);
-    // const loggedIn = localStorage.getItem('user');
-    //
-    // if (authRequired && !loggedIn) {
-    //     return next('/login');
-    // }
-    //
-    // next();
 });
 
 const app = new Vue({
