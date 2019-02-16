@@ -17,12 +17,13 @@ class ProductController extends Controller
         $headers = [
             'Content-Type' => 'application/json',
             'AccessToken' => 'key',
-            'Authorization' => 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjJiNTdkZGJjYjk4YWU3ODQyOTFjZmY5YTQ5YmEzNDI5MzgxOWVlOTAzYmU4YmQxNWI4ZTE1N2E1OTRlMmI5ZDVkM2IxYTQxZjA1MDJjYzlkIn0.eyJhdWQiOiIyIiwianRpIjoiMmI1N2RkYmNiOThhZTc4NDI5MWNmZjlhNDliYTM0MjkzODE5ZWU5MDNiZThiZDE1YjhlMTU3YTU5NGUyYjlkNWQzYjFhNDFmMDUwMmNjOWQiLCJpYXQiOjE1NTAwNzI4ODQsIm5iZiI6MTU1MDA3Mjg4NCwiZXhwIjoxNTgxNjA4ODg0LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.r4yriCZvd-XQVSUWgXYFmkzM2x5ZtssrWwvF-rCtbVuVn44KMA3kL-ELrClFzQNQMkp8hWoiDrySWv-dt1MlxhNTl4evKL2sPGVfvax47IiVdJ8AKl_wBedLtqSL9oSmx14PBiRN6ajB0xVCpLd1fmBhoQSHdzG3EBsY1_Hj3D5BIeD0CspbIfaHKUSLbibsR46XFYk4Js4loUUynIEvebRJUWwIQjjbd4FbddY6EaVoY__KiTeIXgn05RU-y50XX8MX6LRDENjZ6x-wlw8uhArVWQtzcvrzjnLUCL5oYqiLRTujAOJIA5yMv8zaCdUsgwIjbMSI53xfSYqC6v5XG_arxUgP94zWeL5Juono2Dnl-D6Yn5ZEdecXYKkvJPJbindKlgXPh6dkYDwobpGU--fQtS2lVH4dtPNJ_7Qj4095MPMMtHy5jWgq8CiIN7OPhg-5JOyfEDahLEQ5LtxHgW5N-r1pz2Atvth2U0zNok9aT-DxEowho2RfQkyFlrBsLXUPjTceRcKs1wyjDOXXOJCEjBbC4W3LMqRq2aJMlLAIS4s3vrWK-Fb7O6eBC3NeSWnFYjas8velkjSTV65g6fRMvM0UYR2KNoBeBMy_2B0di6JxQo2ZdqmoZNFFQFLvu90XzG_8Iv7TdEobbujeVtVzAUDyfBV43LPRwjFZgpU',
+            'Authorization' => 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6Ijc3M2MxMTU1MGU0ODJkOTM3YWNlNzVjYmYxM2Y3Y2I4OWE1ZDZhZmFkNzFmYWI5Yjg3YjNmMjRmNWZkM2FhY2Y0YzcyYzI1ZTRiODViYjNhIn0.eyJhdWQiOiIyIiwianRpIjoiNzczYzExNTUwZTQ4MmQ5MzdhY2U3NWNiZjEzZjdjYjg5YTVkNmFmYWQ3MWZhYjliODdiM2YyNGY1ZmQzYWFjZjRjNzJjMjVlNGI4NWJiM2EiLCJpYXQiOjE1NTAzMTc2NTksIm5iZiI6MTU1MDMxNzY1OSwiZXhwIjoxNTgxODUzNjU5LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.Jf4knv3ecvt2qC_qUNJYKkZi9zXoPCmr7sgD867IKpXTOmBn-gfevp6YSVEEVCXXpdnmaZTnpQedyGo6TIwf-mI-A8e9GkpMQjAlJXqU8CWlLX-sfPdMtyycPp39b4bM8xjCRj_7zRP4pzHXc8kGLQ-TX_lRksaObmEdX0Z41JCdri65Usz2Gm3MdelzOuRH2zGzPITke5Txsgg-WMPIk7y41ritZTqP5twy0BlTQQJYYW_ySmYixIcRR5woejZpN30LZz61SgCtc3O_aXLKxnz2Dcfj9UdEfn-xcM66Df-ZuLS-JiFPBYD4nggFpqli5DUs2kytU98Vyc-E3MozYEgQdMqBaZCWKiKuGcMczpEZoUD0fJQUgG__SbvzpVVcYBGjb_No2TaTBs4vYkv9V9HmkkLzwhRJ0V1Lh14Uk7Z_vku4JQ9SSdyhi3C5mcxFANhj8_1mFVpze9zRnlXj35_tJ3zoQKpQeqamVL8Psxe87-HvnB8RadCBxKtlkZv7CkwQrZoL7CUbq0ZDYU-3sfr-e04JIWNC_vZkuz4t88QZg_zQZ1KYoqVdvf5zHd3HTnw2TYw1P9wzw7CPy0rq0IeZVgO4WEzeNb7dw6Ftfj4gDUdnJR13Qx2LqbY0ukCuXnAbn5EW18fbYG9iol9mEtNCT98cgcW-nBLWT8G6jLU',
         ];
         $client = new Client([
             'headers' => $headers
         ]);
         $r = $client->get('laravel-api.test/api/products');
+
         $products = json_decode($r->getBody()->getContents());
         return $products->data;
     }

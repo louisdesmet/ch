@@ -14,6 +14,9 @@ import data from './store';
 
 
 window.axios = axios;
+axios.defaults.baseURL = 'http://laravel-api.test/api';
+axios.defaults.headers.common['Accept'] = 'application/json';
+
 Vue.use(VueRouter);
 Vue.use(Vuex);
 Vue.use(Vuetify);
@@ -25,12 +28,9 @@ const router = new VueRouter({
     routes
 });
 
-axios.interceptors.response.use(null, (error) => {
-    if(error.response.status == 401) {
-        store.commit('logout');
-        router.push('/login');
-    }
-});
+
+
+
 
 router.beforeEach((to, from, next) => {
     const auth = to.matched.some(record => record.meta.auth);
