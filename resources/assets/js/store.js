@@ -44,7 +44,6 @@ export default {
             return state.orders;
         },
         userOrders(state) {
-            //console.log(state.userOrders);
             return state.userOrders;
         },
     },
@@ -86,7 +85,6 @@ export default {
         },
         userOrders(state, payload) {
             state.userOrders = payload;
-            console.log(state.userOrders);
         }
 
     },
@@ -113,7 +111,6 @@ export default {
                 }
             }).then(response=>{
                 commit('users', response.data.data.users);
-                console.log(response.data.data.orders);
                 commit('userOrders', response.data.data.orders);
             });
             // await axios.get('/api/users/' + state.currentUser.id).then((response) => {

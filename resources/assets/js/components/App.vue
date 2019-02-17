@@ -96,7 +96,6 @@
         }),
         watch: {
             cartCount: function() {
-                console.log(localStorage.getItem('cart'));
                 if(JSON.parse(localStorage.getItem('cart')) != null) {
                     return JSON.parse(localStorage.getItem('cart')).length;
                 } else {

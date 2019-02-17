@@ -25,7 +25,6 @@
       }),
       props: ['product', 'options'],
       mounted() {
-         console.log(this.product);
          if(this.product) {
             this.add();
          }
@@ -44,7 +43,6 @@
          cart() {
             let string = localStorage.getItem('cart');
             this.items = JSON.parse(string);
-            console.log(this.items);
          },
          checkout() {
             this.$router.push('/checkout');

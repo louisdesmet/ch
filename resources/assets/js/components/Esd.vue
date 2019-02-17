@@ -46,7 +46,7 @@
         }),
         props: ['product'],
         mounted() {
-          console.log(this.product);
+
         },
         methods: {
             cart(product) {

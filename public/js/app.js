@@ -61883,7 +61883,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     watch: {
         cartCount: function cartCount() {
-            console.log(localStorage.getItem('cart'));
             if (JSON.parse(localStorage.getItem('cart')) != null) {
                 return JSON.parse(localStorage.getItem('cart')).length;
             } else {
@@ -64675,6 +64674,36 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -64749,7 +64778,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             sound: true,
             widgets: false,
 
-            activeColor: 'red'
+            activeColor: 'red',
+            selectedExtensions: [],
+            domain: ''
+
         };
     },
     computed: {
@@ -64776,20 +64808,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
 
         sortedUsers: function sortedUsers() {
-            function compare(a, b) {
-                if (a.name < b.name) return -1;
-                if (a.name > b.name) return 1;
-                return 0;
-            }
-            return this.users.sort(compare);
+
+            return this.users.sort(this.compare);
         },
         sortedExtensions: function sortedExtensions() {
-            function compare(a, b) {
-                if (a < b) return -1;
-                if (a > b) return 1;
-                return 0;
-            }
-            return this.extensions.sort(compare);
+            console.log(this.extensions.sort(this.compare));
+            return this.extensions.sort(this.compare);
         }
 
     },
@@ -64854,17 +64878,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.new_domain = false;
         },
         extension: function extension(item) {
-            console.log(item);
             var foundIndex = this.extensions.findIndex(function (x) {
                 return x.id == item.id;
             });
-
-            item.selected = true;
+            if (item.selected) {
+                item.selected = false;
+                this.selectedExtensions = this.selectedExtensions.filter(function (ext) {
+                    return ext.id != item.id;
+                });
+            } else {
+                item.selected = true;
+                this.selectedExtensions.push(this.extensions[foundIndex]);
+            }
             this.extensions[foundIndex] = item;
-            debugger;
+        },
+        compare: function compare(a, b) {
+            if (a.name < b.name) return -1;
+            if (a.name > b.name) return 1;
+            return 0;
         },
         debug: function debug() {
-            debugger;
+            console.log(this.selectedExtensions);
+            //debugger;
         }
     }
 });
@@ -64958,7 +64993,7 @@ var render = function() {
                         [
                           _c(
                             "v-toolbar",
-                            { attrs: { dark: "", color: "primary" } },
+                            { attrs: { dark: "", color: "#3083A7" } },
                             [
                               _c(
                                 "v-btn",
@@ -65954,6 +65989,94 @@ var render = function() {
                         1
                       ),
                       _vm._v(" "),
+                      _c("v-text-field", {
+                        staticClass: "px-4 pt-4",
+                        attrs: {
+                          counter: 25,
+                          label: "Domeinnaam",
+                          required: "",
+                          prefix: "www."
+                        },
+                        model: {
+                          value: _vm.domain,
+                          callback: function($$v) {
+                            _vm.domain = $$v
+                          },
+                          expression: "domain"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "v-list",
+                        {
+                          staticClass: "pa-0",
+                          attrs: { "two-line": "", dense: "" }
+                        },
+                        [
+                          _c(
+                            "v-layout",
+                            { attrs: { row: "", wrap: "" } },
+                            [
+                              _vm._l(_vm.selectedExtensions, function(
+                                item,
+                                index
+                              ) {
+                                return [
+                                  _c(
+                                    "v-flex",
+                                    { attrs: { xs12: "" } },
+                                    [
+                                      _c(
+                                        "v-list-tile",
+                                        { key: item.id, attrs: { avatar: "" } },
+                                        [
+                                          _c(
+                                            "v-list-tile-content",
+                                            [
+                                              _c("v-list-tile-title", [
+                                                _vm._v(
+                                                  "www." +
+                                                    _vm._s(
+                                                      _vm.domain +
+                                                        "." +
+                                                        item.name
+                                                    )
+                                                )
+                                              ])
+                                            ],
+                                            1
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "v-btn",
+                                            {
+                                              attrs: { icon: "" },
+                                              on: { click: function($event) {} }
+                                            },
+                                            [
+                                              _c("v-icon", [
+                                                _vm._v("done_outline")
+                                              ])
+                                            ],
+                                            1
+                                          )
+                                        ],
+                                        1
+                                      ),
+                                      _vm._v(" "),
+                                      _c("v-divider")
+                                    ],
+                                    1
+                                  )
+                                ]
+                              })
+                            ],
+                            2
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
                       _vm.search_extensions != null
                         ? _c(
                             "v-card",
@@ -65974,7 +66097,7 @@ var render = function() {
                                         index
                                       ) {
                                         return [
-                                          item
+                                          item.name
                                             .toLowerCase()
                                             .indexOf(_vm.search_extensions) >= 0
                                             ? _c(
@@ -66060,8 +66183,7 @@ var render = function() {
                                                     {
                                                       key: item.id,
                                                       style: {
-                                                        background: "#424242",
-                                                        color: "white"
+                                                        background: "#E2EAEC"
                                                       },
                                                       attrs: { avatar: "" },
                                                       on: {
@@ -66253,7 +66375,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_vm._v("\n    services\n")])
+  return _c("div", [_vm._v("\r\n    services\r\n")])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -66737,9 +66859,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         };
     },
     props: ['product'],
-    mounted: function mounted() {
-        console.log(this.product);
-    },
+    mounted: function mounted() {},
 
     methods: {
         cart: function cart(product) {
@@ -67088,7 +67208,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
    },
    props: ['product', 'options'],
    mounted: function mounted() {
-      console.log(this.product);
       if (this.product) {
          this.add();
       }
@@ -67108,7 +67227,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       cart: function cart() {
          var string = localStorage.getItem('cart');
          this.items = JSON.parse(string);
-         console.log(this.items);
       },
       checkout: function checkout() {
          this.$router.push('/checkout');
@@ -67290,9 +67408,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
          return this.$store.getters.currentUser;
       }
    },
-   mounted: function mounted() {
-      console.log(this.currentUser);
-   }
+   mounted: function mounted() {}
 });
 
 /***/ }),
@@ -67424,7 +67540,6 @@ var user = Object(__WEBPACK_IMPORTED_MODULE_0__auth__["a" /* getUser */])();
             return state.orders;
         },
         userOrders: function userOrders(state) {
-            //console.log(state.userOrders);
             return state.userOrders;
         }
     },
@@ -67466,7 +67581,6 @@ var user = Object(__WEBPACK_IMPORTED_MODULE_0__auth__["a" /* getUser */])();
         },
         userOrders: function userOrders(state, payload) {
             state.userOrders = payload;
-            console.log(state.userOrders);
         }
     },
     actions: {
@@ -67498,7 +67612,6 @@ var user = Object(__WEBPACK_IMPORTED_MODULE_0__auth__["a" /* getUser */])();
                 }
             }).then(function (response) {
                 commit('users', response.data.data.users);
-                console.log(response.data.data.orders);
                 commit('userOrders', response.data.data.orders);
             });
             // await axios.get('/api/users/' + state.currentUser.id).then((response) => {

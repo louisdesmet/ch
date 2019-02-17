@@ -16,7 +16,7 @@
                                 <v-icon dark>add</v-icon>
                             </v-btn>
                             <v-card>
-                                <v-toolbar dark color="primary">
+                                <v-toolbar dark color="#3083A7">
                                     <v-btn icon dark @click="dialog = false">
                                         <v-icon>close</v-icon>
                                     </v-btn>
@@ -205,11 +205,41 @@
                                 <v-icon>search</v-icon>
                             </v-btn>
                         </v-toolbar>
+                        <v-text-field v-model="domain" class="px-4 pt-4" :counter="25" label="Domeinnaam" required prefix="www."></v-text-field>
+
+
+
+
+
+                        <v-list two-line dense class="pa-0">
+                            <v-layout row wrap>
+                                <template v-for="(item, index) in selectedExtensions">
+                                    <v-flex xs12>
+                                        <v-list-tile :key="item.id" avatar>
+                                            <v-list-tile-content>
+                                                <v-list-tile-title>www.{{ domain + '.' + item.name }}</v-list-tile-title>
+                                            </v-list-tile-content>
+                                            <v-btn icon @click="">
+                                                <v-icon>done_outline</v-icon>
+                                            </v-btn>
+                                        </v-list-tile>
+
+                                        <v-divider></v-divider>
+                                    </v-flex>
+                                </template>
+                            </v-layout>
+                        </v-list>
+
+
+
+
+
+
                         <v-card v-if="search_extensions != null">
                             <v-list two-line dense class="pa-0">
                                 <v-layout row wrap>
                                     <template v-for="(item, index) in extensions">
-                                        <v-flex xs3 v-if="item.toLowerCase().indexOf(search_extensions) >= 0">
+                                        <v-flex xs3 v-if="item.name.toLowerCase().indexOf(search_extensions) >= 0">
                                             <v-list-tile :key="item" avatar @click="extension" v-bind:style="{ background: activeColor }">
                                                 <v-list-tile-content>
                                                     <v-list-tile-title v-html="item"></v-list-tile-title>
@@ -226,7 +256,7 @@
                                 <v-layout row wrap>
                                     <template v-for="(item, index) in sortedExtensions">
                                         <v-flex xs3 v-if="item.selected">
-                                            <v-list-tile :key="item.id" avatar @click="extension(item)" v-bind:style="{ background: '#424242',  color: 'white'}">
+                                            <v-list-tile :key="item.id" avatar @click="extension(item)" v-bind:style="{ background: '#E2EAEC'}">
                                                 <v-list-tile-content>
                                                     <v-list-tile-title v-html="item.name"></v-list-tile-title>
                                                 </v-list-tile-content>
@@ -421,7 +451,10 @@
             sound: true,
             widgets: false,
 
-            activeColor: 'red'
+            activeColor: 'red',
+            selectedExtensions: [],
+            domain: ''
+
         }),
         computed: {
             products() { return this.$store.getters.products; },
@@ -432,24 +465,12 @@
             orders() { return this.$store.getters.orders; },
             currentUser() { return this.$store.getters.currentUser; },
             sortedUsers: function() {
-                function compare(a, b) {
-                    if (a.name < b.name)
-                        return -1;
-                    if (a.name > b.name)
-                        return 1;
-                    return 0;
-                }
-                return this.users.sort(compare);
+
+                return this.users.sort(this.compare);
             },
             sortedExtensions: function() {
-                function compare(a, b) {
-                    if (a < b)
-                        return -1;
-                    if (a > b)
-                        return 1;
-                    return 0;
-                }
-                return this.extensions.sort(compare);
+                console.log(this.extensions.sort(this.compare));
+                return this.extensions.sort(this.compare);
             },
 
         },
@@ -503,16 +524,30 @@
                 this.new_domain = false;
             },
             extension(item) {
-                console.log(item);
                 let foundIndex = this.extensions.findIndex(x => x.id == item.id);
+                if(item.selected) {
+                    item.selected = false;
+                    this.selectedExtensions = this.selectedExtensions.filter(function (ext) {
+                        return ext.id != item.id;
+                    });
 
-                item.selected = true;
+                } else {
+                    item.selected = true;
+                    this.selectedExtensions.push(this.extensions[foundIndex]);
+                }
                 this.extensions[foundIndex] = item;
-                debugger;
 
             },
+            compare(a, b) {
+                if (a.name < b.name)
+                    return -1;
+                if (a.name > b.name)
+                    return 1;
+                return 0;
+            },
             debug() {
-                debugger;
+                console.log(this.selectedExtensions);
+                //debugger;
             }
         }
     }
