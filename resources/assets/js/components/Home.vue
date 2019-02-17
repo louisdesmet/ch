@@ -202,7 +202,7 @@
             if(this.products.length == 0) { this.$store.dispatch('products'); }
             if(this.vendors.length == 0) { this.$store.dispatch('vendors'); }
             if(this.categories.length == 0) { this.$store.dispatch('categories'); }
-            if(this.orders.length == 0) { this.$store.dispatch('orders'); }
+            //if(this.orders.length == 0) { this.$store.dispatch('orders'); }
 
         },
         computed: {

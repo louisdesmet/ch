@@ -22,7 +22,7 @@ class OrderController extends Controller
         $client = new Client([
             'headers' => $headers
         ]);
-        $r = $client->get('laravel-api.test/api/orders');
+        $r = $client->get('laravel-api.test/api/wtf');
 //        $orders = json_decode($r->getBody()->getContents());
 //        return $orders->data;
     }
