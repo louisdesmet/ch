@@ -64587,6 +64587,94 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -64635,11 +64723,33 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             input: false,
             search: null,
             search_clients: null,
+            search_extensions: null,
             new_service: false,
+            new_domain: false,
             md12: true,
             md6: false,
             lg12: true,
-            lg6: false
+            lg6: false,
+            extensions: [{ id: 1, name: 'be', selected: false }, { id: 2, name: 'nl', selected: false }, { id: 3, name: 'eu', selected: false }, { id: 4, name: 'brussels', selected: false }, { id: 5, name: 'gent', selected: false }, { id: 6, name: 'vlaanderen', selected: false }, { id: 7, name: 'com', selected: false }, { id: 8, name: 'net', selected: false }, { id: 9, name: 'org', selected: false }, { id: 10, name: 'info', selected: false }, { id: 11, name: 'biz', selected: false }, { id: 12, name: 'fr', selected: false }, { id: 13, name: 'es', selected: false }, { id: 14, name: 'it', selected: false }, { id: 15, name: 'de', selected: false }, { id: 16, name: 'gr', selected: false }, { id: 17, name: 'ch', selected: false }, { id: 18, name: 'pt', selected: false }, { id: 19, name: 'com.tr', selected: false }, { id: 20, name: 'tr', selected: false }, { id: 21, name: 'lu', selected: false }, { id: 22, name: 'at', selected: false }, { id: 23, name: 'no', selected: false }, { id: 24, name: 'fi', selected: false }, { id: 25, name: 'pl', selected: false }, { id: 26, name: 'com.pl', selected: false }, { id: 27, name: 'dk', selected: false }, { id: 28, name: 'nu', selected: false }, { id: 29, name: 'mobi', selected: false }, { id: 30, name: 'tel', selected: false }, { id: 31, name: 'com.al', selected: false }, { id: 32, name: 'ad', selected: false }, { id: 33, name: 'by', selected: false }, { id: 34, name: 'ba', selected: false }, { id: 35, name: 'bg', selected: false }, { id: 36, name: 'com.cy', selected: false }, { id: 37, name: 'ee', selected: false }, { id: 38, name: 'co.ee', selected: false }, { id: 39, name: 'fo', selected: false }, { id: 40, name: 'gi', selected: false }, { id: 41, name: 'com.gr', selected: false }, { id: 42, name: 'hu', selected: false }, { id: 43, name: 'co.hu', selected: false }, { id: 44, name: 'ie', selected: false }, { id: 45, name: 'je', selected: false }, { id: 46, name: 'hr', selected: false }, { id: 47, name: 'lv', selected: false }, { id: 48, name: 'li', selected: false }, { id: 49, name: 'lt', selected: false }, { id: 50, name: 'cz', selected: false }, { id: 51, name: 'co', selected: false }, { id: 52, name: 'xxx', selected: false }, { id: 53, name: 'asia', selected: false }, { id: 54, name: 'jobs', selected: false }, { id: 55, name: 'name', selected: false }, { id: 56, name: 'pro', selected: false }, { id: 57, name: 'travel', selected: false }, { id: 58, name: 'me', selected: false }, { id: 59, name: 'co.uk', selected: false }, { id: 60, name: 'uk', selected: false }, { id: 61, name: 'sx', selected: false }, { id: 62, name: 'us', selected: false }, { id: 63, name: 'test', selected: false }, { id: 64, name: 'pw', selected: false }, { id: 65, name: 'fm	,', selected: false }, { id: 66, name: 'si', selected: false }, { id: 67, name: 'sk', selected: false }, { id: 68, name: 'se', selected: false }, { id: 69, name: 'agency', selected: false }, { id: 70, name: 'immo', selected: false }, { id: 71, name: 'beer', selected: false }, { id: 72, name: 'solutions', selected: false }, { id: 73, name: 'now', selected: false }, { id: 74, name: 'today', selected: false }, { id: 75, name: 'energy', selected: false }, { id: 76, name: 'events', selected: false }, { id: 77, name: 'club', selected: false }, { id: 78, name: 'promo', selected: false }, { id: 79, name: 'gs', selected: false }, { id: 80, name: 'online', selected: false }, { id: 81, name: 'shop', selected: false }, { id: 82, name: 'expert', selected: false }, { id: 83, name: 'coach', selected: false }, { id: 84, name: 'academy', selected: false }, { id: 85, name: 'cat', selected: false }, { id: 86, name: 'amsterdam', selected: false }, { id: 87, name: 'rs', selected: false }],
+            firstname: '',
+            lastname: '',
+            company_name: '',
+            adresses: '',
+            postcode: '',
+            city: '',
+            country: '',
+            gsm: '',
+            email: '',
+            password: '',
+            tax_number: '',
+            radios: '0',
+
+            dialog: false,
+            notifications: false,
+            sound: true,
+            widgets: false,
+
+            activeColor: 'red'
         };
     },
     computed: {
@@ -64672,7 +64782,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 return 0;
             }
             return this.users.sort(compare);
+        },
+        sortedExtensions: function sortedExtensions() {
+            function compare(a, b) {
+                if (a < b) return -1;
+                if (a > b) return 1;
+                return 0;
+            }
+            return this.extensions.sort(compare);
         }
+
     },
     mounted: function mounted() {
         if (this.orders.length === 0) {
@@ -64710,6 +64829,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.lg12 = false;
             this.lg6 = true;
             this.new_service = true;
+            this.new_domain = false;
         },
         closeNewService: function closeNewService() {
             this.md12 = true;
@@ -64717,6 +64837,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.lg12 = true;
             this.lg6 = false;
             this.new_service = false;
+        },
+        newDomain: function newDomain() {
+            this.md12 = false;
+            this.md6 = true;
+            this.lg12 = false;
+            this.lg6 = true;
+            this.new_domain = true;
+            this.new_service = false;
+        },
+        closeNewDomain: function closeNewDomain() {
+            this.md12 = true;
+            this.md6 = false;
+            this.lg12 = true;
+            this.lg6 = false;
+            this.new_domain = false;
+        },
+        extension: function extension(item) {
+            console.log(item);
+            var foundIndex = this.extensions.findIndex(function (x) {
+                return x.id == item.id;
+            });
+
+            item.selected = true;
+            this.extensions[foundIndex] = item;
+            debugger;
         },
         debug: function debug() {
             debugger;
@@ -64774,11 +64919,298 @@ var render = function() {
                 { staticClass: "new-client", attrs: { href: "#" } },
                 [
                   _c(
-                    "v-btn",
+                    "v-dialog",
                     {
-                      attrs: { fab: "", dark: "", small: "", color: "#6A9F59" }
+                      attrs: {
+                        fullscreen: "",
+                        "hide-overlay": "",
+                        transition: "dialog-bottom-transition"
+                      },
+                      model: {
+                        value: _vm.dialog,
+                        callback: function($$v) {
+                          _vm.dialog = $$v
+                        },
+                        expression: "dialog"
+                      }
                     },
-                    [_c("v-icon", { attrs: { dark: "" } }, [_vm._v("add")])],
+                    [
+                      _c(
+                        "v-btn",
+                        {
+                          attrs: {
+                            slot: "activator",
+                            fab: "",
+                            dark: "",
+                            small: "",
+                            color: "#6A9F59"
+                          },
+                          slot: "activator"
+                        },
+                        [
+                          _c("v-icon", { attrs: { dark: "" } }, [_vm._v("add")])
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-card",
+                        [
+                          _c(
+                            "v-toolbar",
+                            { attrs: { dark: "", color: "primary" } },
+                            [
+                              _c(
+                                "v-btn",
+                                {
+                                  attrs: { icon: "", dark: "" },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.dialog = false
+                                    }
+                                  }
+                                },
+                                [_c("v-icon", [_vm._v("close")])],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c("v-toolbar-title", [
+                                _vm._v("Nieuwe klant aanmaken")
+                              ]),
+                              _vm._v(" "),
+                              _c("v-spacer"),
+                              _vm._v(" "),
+                              _c(
+                                "v-toolbar-items",
+                                [
+                                  _c(
+                                    "v-btn",
+                                    {
+                                      attrs: { dark: "", flat: "" },
+                                      on: {
+                                        click: function($event) {
+                                          _vm.dialog = false
+                                        }
+                                      }
+                                    },
+                                    [_vm._v("Opslaan")]
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-form",
+                            [
+                              _c(
+                                "v-container",
+                                [
+                                  _c("v-text-field", {
+                                    attrs: {
+                                      counter: 25,
+                                      label: "Voornaam",
+                                      required: ""
+                                    },
+                                    model: {
+                                      value: _vm.firstname,
+                                      callback: function($$v) {
+                                        _vm.firstname = $$v
+                                      },
+                                      expression: "firstname"
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("v-text-field", {
+                                    attrs: {
+                                      counter: 25,
+                                      label: "Achternaam",
+                                      required: ""
+                                    },
+                                    model: {
+                                      value: _vm.lastname,
+                                      callback: function($$v) {
+                                        _vm.lastname = $$v
+                                      },
+                                      expression: "lastname"
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("v-text-field", {
+                                    attrs: {
+                                      counter: 25,
+                                      label: "Bedrijfsnaam",
+                                      required: ""
+                                    },
+                                    model: {
+                                      value: _vm.company_name,
+                                      callback: function($$v) {
+                                        _vm.company_name = $$v
+                                      },
+                                      expression: "company_name"
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("v-text-field", {
+                                    attrs: {
+                                      counter: 25,
+                                      label: "Adressen",
+                                      required: ""
+                                    },
+                                    model: {
+                                      value: _vm.adresses,
+                                      callback: function($$v) {
+                                        _vm.adresses = $$v
+                                      },
+                                      expression: "adresses"
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("v-text-field", {
+                                    attrs: {
+                                      counter: 25,
+                                      label: "Postcode",
+                                      required: ""
+                                    },
+                                    model: {
+                                      value: _vm.postcode,
+                                      callback: function($$v) {
+                                        _vm.postcode = $$v
+                                      },
+                                      expression: "postcode"
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("v-text-field", {
+                                    attrs: {
+                                      counter: 25,
+                                      label: "Stad",
+                                      required: ""
+                                    },
+                                    model: {
+                                      value: _vm.city,
+                                      callback: function($$v) {
+                                        _vm.city = $$v
+                                      },
+                                      expression: "city"
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("v-text-field", {
+                                    attrs: {
+                                      counter: 25,
+                                      label: "Land",
+                                      required: ""
+                                    },
+                                    model: {
+                                      value: _vm.country,
+                                      callback: function($$v) {
+                                        _vm.country = $$v
+                                      },
+                                      expression: "country"
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("v-text-field", {
+                                    attrs: {
+                                      counter: 25,
+                                      label: "Telefoonnummer",
+                                      required: ""
+                                    },
+                                    model: {
+                                      value: _vm.gsm,
+                                      callback: function($$v) {
+                                        _vm.gsm = $$v
+                                      },
+                                      expression: "gsm"
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("v-text-field", {
+                                    attrs: {
+                                      label: "E-mailadres",
+                                      required: ""
+                                    },
+                                    model: {
+                                      value: _vm.email,
+                                      callback: function($$v) {
+                                        _vm.email = $$v
+                                      },
+                                      expression: "email"
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("v-text-field", {
+                                    attrs: {
+                                      label: "Wachtwoord",
+                                      required: ""
+                                    },
+                                    model: {
+                                      value: _vm.password,
+                                      callback: function($$v) {
+                                        _vm.password = $$v
+                                      },
+                                      expression: "password"
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("v-text-field", {
+                                    attrs: {
+                                      label: "BTW-nummer",
+                                      required: ""
+                                    },
+                                    model: {
+                                      value: _vm.tax_number,
+                                      callback: function($$v) {
+                                        _vm.tax_number = $$v
+                                      },
+                                      expression: "tax_number"
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-radio-group",
+                                    {
+                                      attrs: { mandatory: false },
+                                      model: {
+                                        value: _vm.radios,
+                                        callback: function($$v) {
+                                          _vm.radios = $$v
+                                        },
+                                        expression: "radios"
+                                      }
+                                    },
+                                    [
+                                      _c("v-radio", {
+                                        attrs: {
+                                          label:
+                                            "Partner beheert alles van de klant. Factuur naar de partner.",
+                                          value: "0"
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _c("v-radio", {
+                                        attrs: {
+                                          label:
+                                            "Eindklant beheert eigen account. Factuur naar de eindklant.",
+                                          value: "1"
+                                        }
+                                      })
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
                     1
                   ),
                   _vm._v(" "),
@@ -65065,7 +65497,8 @@ var render = function() {
                                         absolute: "",
                                         right: "",
                                         fab: ""
-                                      }
+                                      },
+                                      on: { click: _vm.newDomain }
                                     },
                                     [_c("v-icon", [_vm._v("add")])],
                                     1
@@ -65447,6 +65880,285 @@ var render = function() {
                   )
                 ],
                 1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-flex",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.new_domain,
+                      expression: "new_domain"
+                    }
+                  ],
+                  staticClass: "new-domain",
+                  attrs: { xs12: "", sm12: "", md6: "", lg6: "" }
+                },
+                [
+                  _c(
+                    "v-card",
+                    [
+                      _c(
+                        "v-toolbar",
+                        { attrs: { color: "#E2EAEC", light: "" } },
+                        [
+                          _c("v-toolbar-title", [_vm._v("Nieuwe domein")]),
+                          _vm._v(" "),
+                          _c("v-spacer"),
+                          _vm._v(" "),
+                          _vm.button
+                            ? _c(
+                                "v-btn",
+                                {
+                                  attrs: { icon: "" },
+                                  on: { click: _vm.closeNewDomain }
+                                },
+                                [_c("v-icon", [_vm._v("clear")])],
+                                1
+                              )
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _vm.input
+                            ? _c("v-text-field", {
+                                staticClass: "pt-0",
+                                attrs: {
+                                  "hide-details": "",
+                                  "append-outer-icon": "search",
+                                  clearable: ""
+                                },
+                                on: { "click:append-outer": _vm.untoggle },
+                                model: {
+                                  value: _vm.search_extensions,
+                                  callback: function($$v) {
+                                    _vm.search_extensions = $$v
+                                  },
+                                  expression: "search_extensions"
+                                }
+                              })
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _vm.button
+                            ? _c(
+                                "v-btn",
+                                {
+                                  attrs: { icon: "" },
+                                  on: { click: _vm.toggle }
+                                },
+                                [_c("v-icon", [_vm._v("search")])],
+                                1
+                              )
+                            : _vm._e()
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _vm.search_extensions != null
+                        ? _c(
+                            "v-card",
+                            [
+                              _c(
+                                "v-list",
+                                {
+                                  staticClass: "pa-0",
+                                  attrs: { "two-line": "", dense: "" }
+                                },
+                                [
+                                  _c(
+                                    "v-layout",
+                                    { attrs: { row: "", wrap: "" } },
+                                    [
+                                      _vm._l(_vm.extensions, function(
+                                        item,
+                                        index
+                                      ) {
+                                        return [
+                                          item
+                                            .toLowerCase()
+                                            .indexOf(_vm.search_extensions) >= 0
+                                            ? _c(
+                                                "v-flex",
+                                                { attrs: { xs3: "" } },
+                                                [
+                                                  _c(
+                                                    "v-list-tile",
+                                                    {
+                                                      key: item,
+                                                      style: {
+                                                        background:
+                                                          _vm.activeColor
+                                                      },
+                                                      attrs: { avatar: "" },
+                                                      on: {
+                                                        click: _vm.extension
+                                                      }
+                                                    },
+                                                    [
+                                                      _c(
+                                                        "v-list-tile-content",
+                                                        [
+                                                          _c(
+                                                            "v-list-tile-title",
+                                                            {
+                                                              domProps: {
+                                                                innerHTML: _vm._s(
+                                                                  item
+                                                                )
+                                                              }
+                                                            }
+                                                          )
+                                                        ],
+                                                        1
+                                                      )
+                                                    ],
+                                                    1
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c("v-divider")
+                                                ],
+                                                1
+                                              )
+                                            : _vm._e()
+                                        ]
+                                      })
+                                    ],
+                                    2
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        : _c(
+                            "v-card",
+                            [
+                              _c(
+                                "v-list",
+                                {
+                                  staticClass: "pa-0",
+                                  attrs: { "two-line": "", dense: "" }
+                                },
+                                [
+                                  _c(
+                                    "v-layout",
+                                    { attrs: { row: "", wrap: "" } },
+                                    [
+                                      _vm._l(_vm.sortedExtensions, function(
+                                        item,
+                                        index
+                                      ) {
+                                        return [
+                                          item.selected
+                                            ? _c(
+                                                "v-flex",
+                                                { attrs: { xs3: "" } },
+                                                [
+                                                  _c(
+                                                    "v-list-tile",
+                                                    {
+                                                      key: item.id,
+                                                      style: {
+                                                        background: "#424242",
+                                                        color: "white"
+                                                      },
+                                                      attrs: { avatar: "" },
+                                                      on: {
+                                                        click: function(
+                                                          $event
+                                                        ) {
+                                                          return _vm.extension(
+                                                            item
+                                                          )
+                                                        }
+                                                      }
+                                                    },
+                                                    [
+                                                      _c(
+                                                        "v-list-tile-content",
+                                                        [
+                                                          _c(
+                                                            "v-list-tile-title",
+                                                            {
+                                                              domProps: {
+                                                                innerHTML: _vm._s(
+                                                                  item.name
+                                                                )
+                                                              }
+                                                            }
+                                                          )
+                                                        ],
+                                                        1
+                                                      )
+                                                    ],
+                                                    1
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c("v-divider")
+                                                ],
+                                                1
+                                              )
+                                            : _c(
+                                                "v-flex",
+                                                { attrs: { xs3: "" } },
+                                                [
+                                                  _c(
+                                                    "v-list-tile",
+                                                    {
+                                                      key: item.id,
+                                                      attrs: { avatar: "" },
+                                                      on: {
+                                                        click: function(
+                                                          $event
+                                                        ) {
+                                                          return _vm.extension(
+                                                            item
+                                                          )
+                                                        }
+                                                      }
+                                                    },
+                                                    [
+                                                      _c(
+                                                        "v-list-tile-content",
+                                                        [
+                                                          _c(
+                                                            "v-list-tile-title",
+                                                            {
+                                                              domProps: {
+                                                                innerHTML: _vm._s(
+                                                                  item.name
+                                                                )
+                                                              }
+                                                            }
+                                                          )
+                                                        ],
+                                                        1
+                                                      )
+                                                    ],
+                                                    1
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c("v-divider")
+                                                ],
+                                                1
+                                              )
+                                        ]
+                                      })
+                                    ],
+                                    2
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                    ],
+                    1
+                  )
+                ],
+                1
               )
             ],
             1
@@ -65541,7 +66253,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_vm._v("\r\n    services\r\n")])
+  return _c("div", [_vm._v("\n    services\n")])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -65698,17 +66410,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {};
-    },
-    mounted: function mounted() {
-        if (this.orders.length == 0) {
-            this.$store.dispatch('orders');
-        }
-    },
-
-    computed: {
-        orders: function orders() {
-            return this.$store.getters.orders;
-        }
     }
 });
 
