@@ -1483,8 +1483,9 @@ function applyToTag (styleElement, obj) {
 /* harmony export (immutable) */ __webpack_exports__["a"] = getUser;
 function login(credentials) {
     return new Promise(function (res, rej) {
-        axios.post('/api/login', {
-            credentials: credentials
+        axios.post('/login', {
+            email: credentials.email,
+            password: credentials.password
         }).then(function (response) {
             if (response.data.status == 'error') {
                 handleError(rej);
@@ -1652,6 +1653,9 @@ __webpack_require__(23);
 
 
 window.axios = __WEBPACK_IMPORTED_MODULE_5_axios___default.a;
+__WEBPACK_IMPORTED_MODULE_5_axios___default.a.defaults.baseURL = 'http://laravel-api.test/api';
+__WEBPACK_IMPORTED_MODULE_5_axios___default.a.defaults.headers.common['Accept'] = 'application/json';
+
 __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_3_vue_router__["a" /* default */]);
 __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_4_vuex__["a" /* default */]);
 __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuetify___default.a);
@@ -1661,13 +1665,6 @@ var store = new __WEBPACK_IMPORTED_MODULE_4_vuex__["a" /* default */].Store(__WE
 var router = new __WEBPACK_IMPORTED_MODULE_3_vue_router__["a" /* default */]({
     mode: 'history',
     routes: __WEBPACK_IMPORTED_MODULE_7__routes__["a" /* routes */]
-});
-
-__WEBPACK_IMPORTED_MODULE_5_axios___default.a.interceptors.response.use(null, function (error) {
-    if (error.response.status == 401) {
-        store.commit('logout');
-        router.push('/login');
-    }
 });
 
 router.beforeEach(function (to, from, next) {
@@ -61880,8 +61877,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             direction: 'top',
             fab: false,
             drawer: null,
-            right: null
+            right: null,
+            cartCount: 0
         };
+    },
+    watch: {
+        cartCount: function cartCount() {
+            console.log(localStorage.getItem('cart'));
+            if (JSON.parse(localStorage.getItem('cart')) != null) {
+                return JSON.parse(localStorage.getItem('cart')).length;
+            } else {
+                return 0;
+            }
+        }
     },
     methods: {
         logout: function logout() {
@@ -61890,13 +61898,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         cart: function cart() {
             this.$router.push('/cart');
-        },
-        cartCount: function cartCount() {
-            if (JSON.parse(localStorage.getItem('cart')) != null) {
-                return JSON.parse(localStorage.getItem('cart')).length;
-            } else {
-                return 0;
-            }
         }
     }
 });
@@ -62066,7 +62067,7 @@ var render = function() {
                           _c(
                             "span",
                             { attrs: { slot: "badge" }, slot: "badge" },
-                            [_vm._v(_vm._s(_vm.cartCount()))]
+                            [_vm._v(_vm._s(_vm.cartCount))]
                           ),
                           _vm._v(" "),
                           _c(
@@ -62183,7 +62184,7 @@ var render = function() {
                 { attrs: { overlap: "", top: "", left: "", color: "red" } },
                 [
                   _c("span", { attrs: { slot: "badge" }, slot: "badge" }, [
-                    _vm._v(_vm._s(_vm.cartCount()))
+                    _vm._v(_vm._s(_vm.cartCount))
                   ]),
                   _vm._v(" "),
                   _c(
@@ -64563,6 +64564,29 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -64610,34 +64634,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             button: true,
             input: false,
             search: null,
-            search_clients: ''
+            search_clients: null,
+            new_service: false,
+            md12: true,
+            md6: false,
+            lg12: true,
+            lg6: false
         };
     },
-    mounted: function mounted() {
-
-        if (this.users.length == 0) {
-            this.$store.dispatch('users');
-        }
-        if (this.products.length == 0) {
-            this.$store.dispatch('products');
-        }
-        if (this.vendors.length == 0) {
-            this.$store.dispatch('vendors');
-        }
-        if (this.categories.length == 0) {
-            this.$store.dispatch('categories');
-        }
-        if (this.orders.length == 0) {
-            this.$store.dispatch('orders');
-        }
-    },
-
     computed: {
         products: function products() {
             return this.$store.getters.products;
         },
         users: function users() {
             return this.$store.getters.users;
+        },
+        userOrders: function userOrders() {
+            return this.$store.getters.userOrders;
         },
         vendors: function vendors() {
             return this.$store.getters.vendors;
@@ -64661,6 +64674,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             return this.users.sort(compare);
         }
     },
+    mounted: function mounted() {
+        if (this.orders.length === 0) {
+            this.$store.dispatch('orders');
+        }
+        if (this.users.length === 0) {
+            this.$store.dispatch('users');
+        }
+        if (this.products.length === 0) {
+            this.$store.dispatch('products');
+        }
+        if (this.vendors.length === 0) {
+            this.$store.dispatch('vendors');
+        }
+        if (this.categories.length === 0) {
+            this.$store.dispatch('categories');
+        }
+    },
+
     methods: {
         order: function order(product) {
             this.$router.push({ name: 'order', params: { product: product } });
@@ -64672,6 +64703,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         untoggle: function untoggle() {
             this.input = false;
             this.button = true;
+        },
+        newService: function newService() {
+            this.md12 = false;
+            this.md6 = true;
+            this.lg12 = false;
+            this.lg6 = true;
+            this.new_service = true;
+        },
+        closeNewService: function closeNewService() {
+            this.md12 = true;
+            this.md6 = false;
+            this.lg12 = true;
+            this.lg6 = false;
+            this.new_service = false;
         },
         debug: function debug() {
             debugger;
@@ -64710,7 +64755,7 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _c("v-flex", { attrs: { xs4: "", sm3: "", md2: "" } }, [
+      _c("v-flex", { attrs: { xs4: "", sm4: "", md3: "", lg2: "" } }, [
         _c("div", { staticClass: "client-nav" }, [
           _c(
             "div",
@@ -64749,7 +64794,8 @@ var render = function() {
                   solo: "",
                   "append-icon": "search",
                   placeholder: "Zoeken...",
-                  "hide-details": ""
+                  "hide-details": "",
+                  clearable: ""
                 },
                 model: {
                   value: _vm.search_clients,
@@ -64760,30 +64806,101 @@ var render = function() {
                 }
               }),
               _vm._v(" "),
-              _vm.search_clients != "" && _vm.search_clients != null
+              _vm.search_clients != null
                 ? _c(
-                    "div",
-                    { staticClass: "clients" },
-                    _vm._l(_vm.sortedUsers, function(user) {
-                      return user.name
-                        .toLowerCase()
-                        .indexOf(_vm.search_clients) >= 0
-                        ? _c("a", { attrs: { href: "#" } }, [
-                            _vm._v(_vm._s(user.name))
-                          ])
-                        : _vm._e()
-                    }),
-                    0
+                    "v-card",
+                    { staticClass: "mt-3" },
+                    [
+                      _c(
+                        "v-list",
+                        { attrs: { "two-line": "", dark: "", dense: "" } },
+                        [
+                          _vm._l(_vm.sortedUsers, function(item, index) {
+                            return [
+                              item.name
+                                .toLowerCase()
+                                .indexOf(_vm.search_clients) >= 0
+                                ? _c(
+                                    "v-list-tile",
+                                    {
+                                      key: item.id,
+                                      attrs: { avatar: "" },
+                                      on: { click: function($event) {} }
+                                    },
+                                    [
+                                      _c(
+                                        "v-list-tile-content",
+                                        [
+                                          _c("v-list-tile-title", {
+                                            domProps: {
+                                              innerHTML: _vm._s(item.name)
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      )
+                                    ],
+                                    1
+                                  )
+                                : _vm._e(),
+                              _vm._v(" "),
+                              item.name
+                                .toLowerCase()
+                                .indexOf(_vm.search_clients) >= 0
+                                ? _c("v-divider")
+                                : _vm._e()
+                            ]
+                          })
+                        ],
+                        2
+                      )
+                    ],
+                    1
                   )
                 : _c(
-                    "div",
-                    { staticClass: "clients" },
-                    _vm._l(_vm.sortedUsers, function(user) {
-                      return _c("a", { attrs: { href: "#" } }, [
-                        _vm._v(_vm._s(user.name))
-                      ])
-                    }),
-                    0
+                    "v-card",
+                    { staticClass: "mt-2" },
+                    [
+                      _c(
+                        "v-list",
+                        {
+                          staticClass: "pa-0",
+                          attrs: { "two-line": "", dark: "", dense: "" }
+                        },
+                        [
+                          _vm._l(_vm.sortedUsers, function(item, index) {
+                            return [
+                              _c(
+                                "v-list-tile",
+                                {
+                                  key: item.id,
+                                  attrs: { avatar: "" },
+                                  on: { click: function($event) {} }
+                                },
+                                [
+                                  _c(
+                                    "v-list-tile-content",
+                                    [
+                                      _c("v-list-tile-title", {
+                                        domProps: {
+                                          innerHTML: _vm._s(item.name)
+                                        }
+                                      })
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c("v-divider")
+                            ]
+                          })
+                        ],
+                        2
+                      )
+                    ],
+                    1
                   )
             ],
             1
@@ -64791,351 +64908,93 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _c("v-flex", { attrs: { xs8: "", sm9: "", md5: "" } }, [
-        _c(
-          "div",
-          { staticClass: "client-details" },
-          [
-            _c(
-              "v-card",
-              [
-                _c(
-                  "v-toolbar",
-                  { attrs: { color: "#FAFAFA", light: "" } },
-                  [
-                    _c("v-toolbar-title", [
-                      _vm._v(_vm._s(_vm.currentUser.name))
-                    ]),
-                    _vm._v(" "),
-                    _c("v-spacer"),
-                    _vm._v(" "),
-                    _c(
-                      "v-btn",
-                      { attrs: { icon: "" } },
-                      [_c("v-icon", [_vm._v("search")])],
-                      1
-                    )
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "v-list",
-                  { attrs: { "three-line": "" } },
-                  [
-                    _c(
-                      "v-subheader",
-                      [
-                        _vm._v(
-                          "\n                        Services van deze klant\n                        "
-                        ),
-                        _c(
-                          "v-btn",
-                          {
-                            attrs: {
-                              color: "#6A9F59",
-                              dark: "",
-                              small: "",
-                              absolute: "",
-                              right: "",
-                              fab: ""
-                            }
-                          },
-                          [_c("v-icon", [_vm._v("add")])],
-                          1
-                        )
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _vm._l(_vm.services, function(service, index) {
-                      return [
-                        _c("v-divider"),
-                        _vm._v(" "),
-                        _c(
-                          "v-list-tile",
-                          {
-                            key: service.title,
-                            attrs: { avatar: "" },
-                            on: { click: function($event) {} }
-                          },
-                          [
-                            _c(
-                              "v-list-tile-avatar",
-                              {
-                                staticClass: "avatar-image",
-                                attrs: { tile: "" }
-                              },
-                              [_c("img", { attrs: { src: service.avatar } })]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "v-list-tile-content",
-                              [
-                                _c("v-list-tile-title", {
-                                  domProps: { innerHTML: _vm._s(service.title) }
-                                }),
-                                _vm._v(" "),
-                                _c("v-list-tile-sub-title", {
-                                  staticClass: "product-title",
-                                  domProps: { innerHTML: _vm._s(service.item1) }
-                                }),
-                                _vm._v(" "),
-                                _c("v-list-tile-sub-title", {
-                                  staticClass: "product-title",
-                                  domProps: { innerHTML: _vm._s(service.item2) }
-                                }),
-                                _vm._v(" "),
-                                _c("v-list-tile-sub-title", {
-                                  staticClass: "product-title",
-                                  domProps: { innerHTML: _vm._s(service.item3) }
-                                })
-                              ],
-                              1
-                            )
-                          ],
-                          1
-                        )
-                      ]
-                    }),
-                    _vm._v(" "),
-                    _c("v-divider"),
-                    _vm._v(" "),
-                    _c(
-                      "v-subheader",
-                      [
-                        _vm._v(
-                          "\n                        Domeinen van deze klant\n                        "
-                        ),
-                        _c(
-                          "v-btn",
-                          {
-                            attrs: {
-                              color: "#6A9F59",
-                              dark: "",
-                              small: "",
-                              absolute: "",
-                              right: "",
-                              fab: ""
-                            }
-                          },
-                          [_c("v-icon", [_vm._v("add")])],
-                          1
-                        )
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _vm._l(_vm.domains, function(domain, index) {
-                      return [
-                        _c("v-divider"),
-                        _vm._v(" "),
-                        _c(
-                          "v-list-tile",
-                          {
-                            key: domain.title,
-                            attrs: { avatar: "" },
-                            on: { click: function($event) {} }
-                          },
-                          [
-                            _c(
-                              "v-list-tile-avatar",
-                              {
-                                staticClass: "avatar-image",
-                                attrs: { tile: "" }
-                              },
-                              [_c("img", { attrs: { src: domain.avatar } })]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "v-list-tile-content",
-                              [
-                                _c("v-list-tile-title", {
-                                  domProps: { innerHTML: _vm._s(domain.title) }
-                                }),
-                                _vm._v(" "),
-                                _c("v-list-tile-sub-title", {
-                                  staticClass: "product-title",
-                                  domProps: { innerHTML: _vm._s(domain.item1) }
-                                }),
-                                _vm._v(" "),
-                                _c("v-list-tile-sub-title", {
-                                  staticClass: "product-title",
-                                  domProps: { innerHTML: _vm._s(domain.item2) }
-                                }),
-                                _vm._v(" "),
-                                _c("v-list-tile-sub-title", {
-                                  staticClass: "product-title",
-                                  domProps: { innerHTML: _vm._s(domain.item3) }
-                                })
-                              ],
-                              1
-                            )
-                          ],
-                          1
-                        )
-                      ]
-                    })
-                  ],
-                  2
-                )
-              ],
-              1
-            )
-          ],
-          1
-        )
-      ]),
-      _vm._v(" "),
-      _c("v-flex", { attrs: { xs12: "", sm12: "", md5: "" } }, [
-        _c(
-          "div",
-          { staticClass: "new-service" },
-          [
-            _c(
-              "v-card",
-              [
-                _c(
-                  "v-toolbar",
-                  { attrs: { color: "#E2EAEC", light: "" } },
-                  [
-                    _c("v-toolbar-title", [_vm._v("Nieuwe service")]),
-                    _vm._v(" "),
-                    _c("v-spacer"),
-                    _vm._v(" "),
-                    _vm.input
-                      ? _c("v-text-field", {
-                          staticClass: "pt-0",
-                          attrs: {
-                            "hide-details": "",
-                            "append-outer-icon": "search",
-                            clearable: ""
-                          },
-                          on: { "click:append-outer": _vm.untoggle },
-                          model: {
-                            value: _vm.search,
-                            callback: function($$v) {
-                              _vm.search = $$v
-                            },
-                            expression: "search"
-                          }
-                        })
-                      : _vm._e(),
-                    _vm._v(" "),
-                    _vm.button
-                      ? _c(
-                          "v-btn",
-                          { attrs: { icon: "" }, on: { click: _vm.toggle } },
-                          [_c("v-icon", [_vm._v("search")])],
-                          1
-                        )
-                      : _vm._e()
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "v-list",
-                  {
-                    staticClass: "new-service-color",
-                    attrs: { "three-line": "" }
+      _c(
+        "v-flex",
+        { attrs: { xs8: "", sm8: "", md9: "", lg10: "" } },
+        [
+          _c(
+            "v-layout",
+            { attrs: { row: "", wrap: "" } },
+            [
+              _c(
+                "v-flex",
+                {
+                  class: {
+                    md12: _vm.md12,
+                    md6: _vm.md6,
+                    lg12: _vm.lg12,
+                    lg6: _vm.lg6
                   },
-                  [
-                    _c(
-                      "v-subheader",
-                      [
-                        _c(
-                          "v-container",
-                          { attrs: { "pa-0": "", "grid-list-md": "" } },
-                          [
-                            _c(
-                              "v-layout",
-                              { attrs: { row: "", wrap: "" } },
-                              [
-                                _c(
-                                  "v-flex",
-                                  { attrs: { xs6: "" } },
-                                  [
-                                    _c("v-select", {
-                                      attrs: {
-                                        "item-text": "name",
-                                        items: _vm.categories,
-                                        placeholder: "Categories",
-                                        clearable: "",
-                                        "hide-details": ""
-                                      },
-                                      model: {
-                                        value: _vm.category,
-                                        callback: function($$v) {
-                                          _vm.category = $$v
-                                        },
-                                        expression: "category"
-                                      }
-                                    })
-                                  ],
-                                  1
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "v-flex",
-                                  { attrs: { xs6: "" } },
-                                  [
-                                    _c("v-select", {
-                                      attrs: {
-                                        "item-text": "name",
-                                        items: _vm.vendors,
-                                        placeholder: "Vendors",
-                                        clearable: "",
-                                        "hide-details": ""
-                                      },
-                                      model: {
-                                        value: _vm.vendor,
-                                        callback: function($$v) {
-                                          _vm.vendor = $$v
-                                        },
-                                        expression: "vendor"
-                                      }
-                                    })
-                                  ],
-                                  1
-                                )
-                              ],
-                              1
-                            )
-                          ],
-                          1
-                        )
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _vm._l(_vm.products, function(product, index) {
-                      return [
-                        _vm.category || _vm.vendor || _vm.search != null
-                          ? [
-                              index != 0 &&
-                              (_vm.category == product.category.name ||
-                                _vm.vendor == product.vendor.name ||
-                                product.name
-                                  .toLowerCase()
-                                  .indexOf(_vm.search) >= 0)
-                                ? _c("v-divider")
-                                : _vm._e(),
+                  attrs: { xs12: "", sm12: "" }
+                },
+                [
+                  _c(
+                    "div",
+                    { staticClass: "client-details" },
+                    [
+                      _c(
+                        "v-card",
+                        [
+                          _c(
+                            "v-toolbar",
+                            { attrs: { color: "#FAFAFA", light: "" } },
+                            [
+                              _c("v-toolbar-title", [
+                                _vm._v(_vm._s(_vm.currentUser.name))
+                              ]),
                               _vm._v(" "),
-                              _vm.category == product.category.name ||
-                              _vm.vendor == product.vendor.name ||
-                              product.name.toLowerCase().indexOf(_vm.search) >=
-                                0
-                                ? _c(
+                              _c("v-spacer"),
+                              _vm._v(" "),
+                              _c(
+                                "v-btn",
+                                { attrs: { icon: "" } },
+                                [_c("v-icon", [_vm._v("search")])],
+                                1
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-list",
+                            { attrs: { "three-line": "" } },
+                            [
+                              _c(
+                                "v-subheader",
+                                [
+                                  _vm._v(
+                                    "\n                                Services van deze klant\n                                "
+                                  ),
+                                  _c(
+                                    "v-btn",
+                                    {
+                                      attrs: {
+                                        color: "#6A9F59",
+                                        dark: "",
+                                        small: "",
+                                        absolute: "",
+                                        right: "",
+                                        fab: ""
+                                      },
+                                      on: { click: _vm.newService }
+                                    },
+                                    [_c("v-icon", [_vm._v("add")])],
+                                    1
+                                  )
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _vm._l(_vm.userOrders, function(service, index) {
+                                return [
+                                  _c("v-divider"),
+                                  _vm._v(" "),
+                                  _c(
                                     "v-list-tile",
                                     {
-                                      key: product.name,
+                                      key: service.id,
                                       attrs: { avatar: "" },
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.order(product)
-                                        }
-                                      }
+                                      on: { click: function($event) {} }
                                     },
                                     [
                                       _c(
@@ -65146,7 +65005,9 @@ var render = function() {
                                         },
                                         [
                                           _c("img", {
-                                            attrs: { src: product.image }
+                                            attrs: {
+                                              src: service.product.image
+                                            }
                                           })
                                         ]
                                       ),
@@ -65156,15 +65017,8 @@ var render = function() {
                                         [
                                           _c("v-list-tile-title", {
                                             domProps: {
-                                              innerHTML: _vm._s(product.name)
-                                            }
-                                          }),
-                                          _vm._v(" "),
-                                          _c("v-list-tile-sub-title", {
-                                            staticClass: "product-title",
-                                            domProps: {
                                               innerHTML: _vm._s(
-                                                product.category.name
+                                                service.product.name
                                               )
                                             }
                                           }),
@@ -65173,8 +65027,15 @@ var render = function() {
                                             staticClass: "product-title",
                                             domProps: {
                                               innerHTML: _vm._s(
-                                                product.vendor.name
+                                                service.product_key.key
                                               )
+                                            }
+                                          }),
+                                          _vm._v(" "),
+                                          _c("v-list-tile-sub-title", {
+                                            staticClass: "product-title",
+                                            domProps: {
+                                              innerHTML: _vm._s(service.status)
                                             }
                                           })
                                         ],
@@ -65183,81 +65044,416 @@ var render = function() {
                                     ],
                                     1
                                   )
-                                : _vm._e()
-                            ]
-                          : [
+                                ]
+                              }),
+                              _vm._v(" "),
+                              _c("v-divider"),
+                              _vm._v(" "),
                               _c(
-                                "v-list-tile",
-                                {
-                                  key: product.name,
-                                  attrs: { avatar: "" },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.order(product)
-                                    }
-                                  }
-                                },
+                                "v-subheader",
                                 [
-                                  _c(
-                                    "v-list-tile-avatar",
-                                    {
-                                      staticClass: "avatar-image",
-                                      attrs: { tile: "" }
-                                    },
-                                    [
-                                      _c("img", {
-                                        attrs: { src: product.image }
-                                      })
-                                    ]
+                                  _vm._v(
+                                    "\n                                Domeinen van deze klant\n                                "
                                   ),
-                                  _vm._v(" "),
                                   _c(
-                                    "v-list-tile-content",
-                                    [
-                                      _c("v-list-tile-title", {
-                                        domProps: {
-                                          innerHTML: _vm._s(product.name)
-                                        }
-                                      }),
-                                      _vm._v(" "),
-                                      _c("v-list-tile-sub-title", {
-                                        staticClass: "product-title",
-                                        domProps: {
-                                          innerHTML: _vm._s(
-                                            product.category.name
-                                          )
-                                        }
-                                      }),
-                                      _vm._v(" "),
-                                      _c("v-list-tile-sub-title", {
-                                        staticClass: "product-title",
-                                        domProps: {
-                                          innerHTML: _vm._s(product.vendor.name)
-                                        }
-                                      })
-                                    ],
+                                    "v-btn",
+                                    {
+                                      attrs: {
+                                        color: "#6A9F59",
+                                        dark: "",
+                                        small: "",
+                                        absolute: "",
+                                        right: "",
+                                        fab: ""
+                                      }
+                                    },
+                                    [_c("v-icon", [_vm._v("add")])],
                                     1
                                   )
                                 ],
                                 1
                               ),
                               _vm._v(" "),
-                              index != _vm.products.length - 1
-                                ? _c("v-divider")
-                                : _vm._e()
-                            ]
-                      ]
-                    })
+                              _vm._l(_vm.domains, function(domain, index) {
+                                return [
+                                  _c("v-divider"),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-list-tile",
+                                    {
+                                      key: domain.title,
+                                      attrs: { avatar: "" },
+                                      on: { click: function($event) {} }
+                                    },
+                                    [
+                                      _c(
+                                        "v-list-tile-avatar",
+                                        {
+                                          staticClass: "avatar-image",
+                                          attrs: { tile: "" }
+                                        },
+                                        [
+                                          _c("img", {
+                                            attrs: { src: domain.avatar }
+                                          })
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-list-tile-content",
+                                        [
+                                          _c("v-list-tile-title", {
+                                            domProps: {
+                                              innerHTML: _vm._s(domain.title)
+                                            }
+                                          }),
+                                          _vm._v(" "),
+                                          _c("v-list-tile-sub-title", {
+                                            staticClass: "product-title",
+                                            domProps: {
+                                              innerHTML: _vm._s(domain.item1)
+                                            }
+                                          }),
+                                          _vm._v(" "),
+                                          _c("v-list-tile-sub-title", {
+                                            staticClass: "product-title",
+                                            domProps: {
+                                              innerHTML: _vm._s(domain.item2)
+                                            }
+                                          }),
+                                          _vm._v(" "),
+                                          _c("v-list-tile-sub-title", {
+                                            staticClass: "product-title",
+                                            domProps: {
+                                              innerHTML: _vm._s(domain.item3)
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      )
+                                    ],
+                                    1
+                                  )
+                                ]
+                              })
+                            ],
+                            2
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "v-flex",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.new_service,
+                      expression: "new_service"
+                    }
                   ],
-                  2
-                )
-              ],
-              1
-            )
-          ],
-          1
-        )
-      ])
+                  staticClass: "new-service",
+                  attrs: { xs12: "", sm12: "", md6: "", lg6: "" }
+                },
+                [
+                  _c(
+                    "v-card",
+                    [
+                      _c(
+                        "v-toolbar",
+                        { attrs: { color: "#E2EAEC", light: "" } },
+                        [
+                          _c("v-toolbar-title", [_vm._v("Nieuwe service")]),
+                          _vm._v(" "),
+                          _c("v-spacer"),
+                          _vm._v(" "),
+                          _vm.button
+                            ? _c(
+                                "v-btn",
+                                {
+                                  attrs: { icon: "" },
+                                  on: { click: _vm.closeNewService }
+                                },
+                                [_c("v-icon", [_vm._v("clear")])],
+                                1
+                              )
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _vm.input
+                            ? _c("v-text-field", {
+                                staticClass: "pt-0",
+                                attrs: {
+                                  "hide-details": "",
+                                  "append-outer-icon": "search",
+                                  clearable: ""
+                                },
+                                on: { "click:append-outer": _vm.untoggle },
+                                model: {
+                                  value: _vm.search,
+                                  callback: function($$v) {
+                                    _vm.search = $$v
+                                  },
+                                  expression: "search"
+                                }
+                              })
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _vm.button
+                            ? _c(
+                                "v-btn",
+                                {
+                                  attrs: { icon: "" },
+                                  on: { click: _vm.toggle }
+                                },
+                                [_c("v-icon", [_vm._v("search")])],
+                                1
+                              )
+                            : _vm._e()
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-list",
+                        {
+                          staticClass: "new-service-color",
+                          attrs: { "three-line": "" }
+                        },
+                        [
+                          _c(
+                            "v-subheader",
+                            [
+                              _c(
+                                "v-container",
+                                { attrs: { "pa-0": "", "grid-list-md": "" } },
+                                [
+                                  _c(
+                                    "v-layout",
+                                    { attrs: { row: "", wrap: "" } },
+                                    [
+                                      _c(
+                                        "v-flex",
+                                        { attrs: { xs6: "" } },
+                                        [
+                                          _c("v-select", {
+                                            attrs: {
+                                              "item-text": "name",
+                                              items: _vm.categories,
+                                              placeholder: "Categories",
+                                              clearable: "",
+                                              "hide-details": ""
+                                            },
+                                            model: {
+                                              value: _vm.category,
+                                              callback: function($$v) {
+                                                _vm.category = $$v
+                                              },
+                                              expression: "category"
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-flex",
+                                        { attrs: { xs6: "" } },
+                                        [
+                                          _c("v-select", {
+                                            attrs: {
+                                              "item-text": "name",
+                                              items: _vm.vendors,
+                                              placeholder: "Vendors",
+                                              clearable: "",
+                                              "hide-details": ""
+                                            },
+                                            model: {
+                                              value: _vm.vendor,
+                                              callback: function($$v) {
+                                                _vm.vendor = $$v
+                                              },
+                                              expression: "vendor"
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      )
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _vm._l(_vm.products, function(product, index) {
+                            return [
+                              _vm.category || _vm.vendor || _vm.search != null
+                                ? [
+                                    index != 0 &&
+                                    (_vm.category == product.category.name ||
+                                      _vm.vendor == product.vendor.name ||
+                                      product.name
+                                        .toLowerCase()
+                                        .indexOf(_vm.search) >= 0)
+                                      ? _c("v-divider")
+                                      : _vm._e(),
+                                    _vm._v(" "),
+                                    _vm.category == product.category.name ||
+                                    _vm.vendor == product.vendor.name ||
+                                    product.name
+                                      .toLowerCase()
+                                      .indexOf(_vm.search) >= 0
+                                      ? _c(
+                                          "v-list-tile",
+                                          {
+                                            key: product.name,
+                                            attrs: { avatar: "" },
+                                            on: {
+                                              click: function($event) {
+                                                return _vm.order(product)
+                                              }
+                                            }
+                                          },
+                                          [
+                                            _c(
+                                              "v-list-tile-avatar",
+                                              {
+                                                staticClass: "avatar-image",
+                                                attrs: { tile: "" }
+                                              },
+                                              [
+                                                _c("img", {
+                                                  attrs: { src: product.image }
+                                                })
+                                              ]
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "v-list-tile-content",
+                                              [
+                                                _c("v-list-tile-title", {
+                                                  domProps: {
+                                                    innerHTML: _vm._s(
+                                                      product.name
+                                                    )
+                                                  }
+                                                }),
+                                                _vm._v(" "),
+                                                _c("v-list-tile-sub-title", {
+                                                  staticClass: "product-title",
+                                                  domProps: {
+                                                    innerHTML: _vm._s(
+                                                      product.category.name
+                                                    )
+                                                  }
+                                                }),
+                                                _vm._v(" "),
+                                                _c("v-list-tile-sub-title", {
+                                                  staticClass: "product-title",
+                                                  domProps: {
+                                                    innerHTML: _vm._s(
+                                                      product.vendor.name
+                                                    )
+                                                  }
+                                                })
+                                              ],
+                                              1
+                                            )
+                                          ],
+                                          1
+                                        )
+                                      : _vm._e()
+                                  ]
+                                : [
+                                    _c(
+                                      "v-list-tile",
+                                      {
+                                        key: product.name,
+                                        attrs: { avatar: "" },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.order(product)
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _c(
+                                          "v-list-tile-avatar",
+                                          {
+                                            staticClass: "avatar-image",
+                                            attrs: { tile: "" }
+                                          },
+                                          [
+                                            _c("img", {
+                                              attrs: { src: product.image }
+                                            })
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "v-list-tile-content",
+                                          [
+                                            _c("v-list-tile-title", {
+                                              domProps: {
+                                                innerHTML: _vm._s(product.name)
+                                              }
+                                            }),
+                                            _vm._v(" "),
+                                            _c("v-list-tile-sub-title", {
+                                              staticClass: "product-title",
+                                              domProps: {
+                                                innerHTML: _vm._s(
+                                                  product.category.name
+                                                )
+                                              }
+                                            }),
+                                            _vm._v(" "),
+                                            _c("v-list-tile-sub-title", {
+                                              staticClass: "product-title",
+                                              domProps: {
+                                                innerHTML: _vm._s(
+                                                  product.vendor.name
+                                                )
+                                              }
+                                            })
+                                          ],
+                                          1
+                                        )
+                                      ],
+                                      1
+                                    ),
+                                    _vm._v(" "),
+                                    index != _vm.products.length - 1
+                                      ? _c("v-divider")
+                                      : _vm._e()
+                                  ]
+                            ]
+                          })
+                        ],
+                        2
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
     ],
     1
   )
@@ -65345,7 +65541,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_vm._v("\n    services\n")])
+  return _c("div", [_vm._v("\r\n    services\r\n")])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -66495,7 +66691,8 @@ var user = Object(__WEBPACK_IMPORTED_MODULE_0__auth__["a" /* getUser */])();
         users: [],
         vendors: [],
         categories: [],
-        orders: []
+        orders: [],
+        userOrders: []
     },
     getters: {
         loading: function loading(state) {
@@ -66524,6 +66721,10 @@ var user = Object(__WEBPACK_IMPORTED_MODULE_0__auth__["a" /* getUser */])();
         },
         orders: function orders(state) {
             return state.orders;
+        },
+        userOrders: function userOrders(state) {
+            //console.log(state.userOrders);
+            return state.userOrders;
         }
     },
     mutations: {
@@ -66561,39 +66762,92 @@ var user = Object(__WEBPACK_IMPORTED_MODULE_0__auth__["a" /* getUser */])();
         },
         orders: function orders(state, payload) {
             state.orders = payload;
+        },
+        userOrders: function userOrders(state, payload) {
+            state.userOrders = payload;
+            console.log(state.userOrders);
         }
     },
     actions: {
         login: function login(context) {
             context.commit('login');
         },
-        products: function products(context) {
-            axios.get('/api/products').then(function (response) {
-                context.commit('products', response.data);
-            });
-        },
-        users: function users(_ref) {
+        products: function products(_ref) {
             var commit = _ref.commit,
                 state = _ref.state;
 
-            axios.get('/api/users/' + state.currentUser.id).then(function (response) {
+            axios.get('/products', {
+                headers: {
+                    Authorization: 'Bearer ' + state.currentUser.token
+                }
+            }).then(function (response) {
+                commit('products', response.data.data);
+            });
+            /*await axios.get('/api/products').then((response) => {
+                context.commit('products', response.data);
+            });*/
+        },
+        users: function users(_ref2) {
+            var commit = _ref2.commit,
+                state = _ref2.state;
+
+            axios.get('/users/' + state.currentUser.id, {
+                headers: {
+                    Authorization: 'Bearer ' + state.currentUser.token
+                }
+            }).then(function (response) {
                 commit('users', response.data.data.users);
+                console.log(response.data.data.orders);
+                commit('userOrders', response.data.data.orders);
             });
+            // await axios.get('/api/users/' + state.currentUser.id).then((response) => {
+            //     commit('users', response.data.data.users);
+            // });
         },
-        vendors: function vendors(context) {
-            axios.get('/api/vendors').then(function (response) {
-                context.commit('vendors', response.data);
+        vendors: function vendors(_ref3) {
+            var commit = _ref3.commit,
+                state = _ref3.state;
+
+            axios.get('/vendors', {
+                headers: {
+                    Authorization: 'Bearer ' + state.currentUser.token
+                }
+            }).then(function (response) {
+                commit('vendors', response.data.data);
             });
+            // await axios.get('/api/vendors').then((response) => {
+            //     context.commit('vendors', response.data);
+            // });
         },
-        categories: function categories(context) {
-            axios.get('/api/categories').then(function (response) {
-                context.commit('categories', response.data);
+        categories: function categories(_ref4) {
+            var commit = _ref4.commit,
+                state = _ref4.state;
+
+            axios.get('/categories', {
+                headers: {
+                    Authorization: 'Bearer ' + state.currentUser.token
+                }
+            }).then(function (response) {
+                commit('categories', response.data.data);
             });
+            // await axios.get('/api/categories').then((response) => {
+            //     context.commit('categories', response.data);
+            // });
         },
-        orders: function orders(context) {
-            axios.get('/api/orders').then(function (response) {
-                context.commit('orders', response.data);
+        orders: function orders(_ref5) {
+            var commit = _ref5.commit,
+                state = _ref5.state;
+
+            axios.get('/orders', {
+                headers: {
+                    Authorization: 'Bearer ' + state.currentUser.token
+                }
+            }).then(function (response) {
+                commit('orders', response.data.data);
             });
+            // await axios.get('/api/orders').then((response) => {
+            //     context.commit('orders', response.data);
+            // });
         }
     }
 });

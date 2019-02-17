@@ -14,7 +14,7 @@
                     <v-btn flat><router-link class="links" to="/reports"><v-icon left dark small>{{ menu.rapporten.icon }}</v-icon>{{ menu.rapporten.text }}</router-link></v-btn>
                     <v-btn flat>
                     <v-badge overlap top left color="red">
-                        <span slot="badge">{{ cartCount() }}</span>
+                        <span slot="badge">{{ cartCount }}</span>
                         <v-avatar size="40" color="#6A9F59">
                             <v-btn flat dark fab icon @click="cart">
                                 <v-icon>shopping_cart</v-icon>
@@ -50,7 +50,7 @@
             <router-view></router-view>
             <div class="floating-cart">
                 <v-badge overlap top left color="red">
-                    <span slot="badge">{{ cartCount() }}</span>
+                    <span slot="badge">{{ cartCount }}</span>
                     <v-avatar size="40" color="#6A9F59">
                         <v-btn flat dark fab icon small @click="cart">
                             <v-icon>shopping_cart</v-icon>
@@ -91,8 +91,19 @@
             direction: 'top',
             fab: false,
             drawer: null,
-            right: null
+            right: null,
+            cartCount: 0
         }),
+        watch: {
+            cartCount: function() {
+                console.log(localStorage.getItem('cart'));
+                if(JSON.parse(localStorage.getItem('cart')) != null) {
+                    return JSON.parse(localStorage.getItem('cart')).length;
+                } else {
+                    return 0;
+                }
+            }
+        },
         methods: {
             logout() {
                 this.$store.commit('logout');
@@ -101,13 +112,13 @@
             cart() {
                 this.$router.push('/cart');
             },
-            cartCount() {
-                if(JSON.parse(localStorage.getItem('cart')) != null) {
-                    return JSON.parse(localStorage.getItem('cart')).length;
-                } else {
-                    return 0;
-                }
-            }
+            // cartCount() {
+            //     if(JSON.parse(localStorage.getItem('cart')) != null) {
+            //         return JSON.parse(localStorage.getItem('cart')).length;
+            //     } else {
+            //         return 0;
+            //     }
+            // }
         }
     }
 </script>

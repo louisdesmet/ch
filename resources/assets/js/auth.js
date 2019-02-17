@@ -1,7 +1,8 @@
 export function login(credentials) {
     return new Promise((res, rej) => {
-        axios.post('/api/login', {
-            credentials
+        axios.post('/login', {
+            email: credentials.email,
+            password: credentials.password
         }).then(response => {
             if(response.data.status == 'error') {
                 handleError(rej);

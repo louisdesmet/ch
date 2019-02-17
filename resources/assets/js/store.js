@@ -12,7 +12,8 @@ export default {
         users: [],
         vendors: [],
         categories: [],
-        orders: []
+        orders: [],
+        userOrders: []
     },
     getters: {
         loading(state) {
@@ -42,7 +43,10 @@ export default {
         orders(state) {
             return state.orders;
         },
-
+        userOrders(state) {
+            //console.log(state.userOrders);
+            return state.userOrders;
+        },
     },
     mutations: {
         login(state) {
@@ -79,36 +83,78 @@ export default {
         },
         orders(state, payload) {
             state.orders = payload;
+        },
+        userOrders(state, payload) {
+            state.userOrders = payload;
+            console.log(state.userOrders);
         }
+
     },
     actions: {
         login(context) {
             context.commit('login');
         },
-        products(context) {
-            axios.get('/api/products').then((response) => {
-                context.commit('products', response.data);
+        products({commit, state}) {
+            axios.get('/products', {
+                headers: {
+                    Authorization: 'Bearer ' + state.currentUser.token
+                }
+            }).then(response=>{
+                commit('products', response.data.data);
             });
+            /*await axios.get('/api/products').then((response) => {
+                context.commit('products', response.data);
+            });*/
         },
         users({commit, state}) {
-            axios.get('/api/users/' + state.currentUser.id).then((response) => {
+            axios.get('/users/' + state.currentUser.id, {
+                headers: {
+                    Authorization: 'Bearer ' + state.currentUser.token
+                }
+            }).then(response=>{
                 commit('users', response.data.data.users);
+                console.log(response.data.data.orders);
+                commit('userOrders', response.data.data.orders);
             });
+            // await axios.get('/api/users/' + state.currentUser.id).then((response) => {
+            //     commit('users', response.data.data.users);
+            // });
         },
-        vendors(context) {
-            axios.get('/api/vendors').then((response) => {
-                context.commit('vendors', response.data);
+        vendors({commit, state}) {
+            axios.get('/vendors', {
+                headers: {
+                    Authorization: 'Bearer ' + state.currentUser.token
+                }
+            }).then(response=>{
+                commit('vendors', response.data.data);
             });
+            // await axios.get('/api/vendors').then((response) => {
+            //     context.commit('vendors', response.data);
+            // });
         },
-        categories(context) {
-            axios.get('/api/categories').then((response) => {
-                context.commit('categories', response.data);
+        categories({commit, state}) {
+            axios.get('/categories', {
+                headers: {
+                    Authorization: 'Bearer ' + state.currentUser.token
+                }
+            }).then(response=>{
+                commit('categories', response.data.data);
             });
+            // await axios.get('/api/categories').then((response) => {
+            //     context.commit('categories', response.data);
+            // });
         },
-        orders(context) {
-            axios.get('/api/orders').then((response) => {
-                context.commit('orders', response.data);
+        orders({commit, state}) {
+            axios.get('/orders', {
+                headers: {
+                    Authorization: 'Bearer ' + state.currentUser.token
+                }
+            }).then(response=>{
+                commit('orders', response.data.data);
             });
+            // await axios.get('/api/orders').then((response) => {
+            //     context.commit('orders', response.data);
+            // });
         }
     }
 };
